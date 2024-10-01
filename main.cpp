@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <Windows.h>
 
 int main() {
+	SetConsoleOutputCP(65001);
 
-	printf("Hallo PG3!");
-	
+	char str[] = "ソ";
+	printf("%s", str);
 
 	return 0;
 }
