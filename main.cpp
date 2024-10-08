@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <iostream>
-#include <cstdlib>   // rand(), srand()
-#include <ctime>     // time()
-#include <windows.h> // Sleep() for Windows
+#include <cstdlib>
+#include <ctime>
+#include <windows.h>
 using namespace std;
 
-// コールバック関数：サイコロの出目の結果を表示する
+//コールバック関数
 void DispResult(int* diceResult) {
     if (*diceResult % 2 == 0) {
         printf("結果は丁（偶数）でした。\n");
@@ -15,30 +15,28 @@ void DispResult(int* diceResult) {
     }
 }
 
-// サイコロを振ってランダムな出目を返す
+//ランダムな出目を返す
 int rollDice() {
-    return rand() % 6 + 1;  // 1から6のランダムな整数を生成
+    return rand() % 6 + 1;  //ランダム整数
 }
 
-// 指定された時間（秒）待ってからコールバック関数を実行する
+//待ってからコールバック関数を実行する
 void setTimeout(void (*p)(int*), int second, int* result) {
-    Sleep(second * 1000);  // 指定された秒数待つ
-    p(result);             // コールバック関数を呼び出す
+    Sleep(second * 1000);  //指定された秒数待つ
+    p(result);
 }
 
 int main() {
 
-    SetConsoleOutputCP(65001);
-
-    srand((unsigned)time(0));  // 乱数の種を初期化
+    srand((unsigned)time(0));  //乱数の種を初期化
     int userChoice;
-    int diceResult = rollDice();  // ランダムなサイコロの出目
+    int diceResult = rollDice();
 
     printf_s("サイコロの出目が奇数（半）か偶数（丁）かを当ててください。\n");
     printf_s("1: 奇数（半）、2: 偶数（丁）を入力してください : \n");
     cin >> userChoice;
 
-    printf("結果発表まで3秒お待ちください...");
+    printf("結果発表まで3秒お待ちください...\n");
 
     // 関数ポインタとコールバック関数を使用して3秒後に結果を表示
     setTimeout(DispResult, 3, &diceResult);
