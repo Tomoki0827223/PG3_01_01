@@ -45,11 +45,16 @@ int main() {
 
     // 比較
     if (recursiveTotal > standardTotal) {
-        printf("再帰的な賃金体系のほうが有利です。\n");
+        printf("再帰的な賃金体系のほうが有利です。\n\n");
     }
     else {
-        printf("一般的な賃金体系のほうが有利です。\n");
+        printf("一般的な賃金体系のほうが有利です。\n\n");
     }
+
+    // プログラムが終了しないように一時停止
+    printf("終了するにはEnterキーを押してください");
+    cin.ignore();
+    cin.get();
 
     return 0;
 }
