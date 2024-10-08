@@ -8,10 +8,10 @@ using namespace std;
 //コールバック関数
 void DispResult(int* diceResult) {
     if (*diceResult % 2 == 0) {
-        printf("結果は丁（偶数）でした。\n");
+        printf("結果は丁（偶数）でした。\n\n");
     }
     else {
-        printf("結果は半（奇数）でした。\n");
+        printf("結果は半（奇数）でした。\n\n");
     }
 }
 
@@ -32,11 +32,11 @@ int main() {
     int userChoice;
     int diceResult = rollDice();
 
-    printf_s("サイコロの出目が奇数（半）か偶数（丁）かを当ててください。\n");
-    printf_s("1: 奇数（半）、2: 偶数（丁）を入力してください : \n");
+    printf("サイコロの出目が奇数（半）か偶数（丁）かを当ててください。\n");
+    printf_s("1: 奇数（半）、2: 偶数（丁）を入力してください。\n");
     cin >> userChoice;
 
-    printf("結果発表まで3秒お待ちください...\n");
+    printf("結果まで3秒お待ちください...\n\n");
 
     // 関数ポインタとコールバック関数を使用して3秒後に結果を表示
     setTimeout(DispResult, 3, &diceResult);
@@ -53,6 +53,11 @@ int main() {
     else {
         printf("不正解です。\n");
     }
+
+    // プログラムが終了しないように一時停止
+    printf("終了するにはEnterキーを押してください");
+    cin.ignore();
+    cin.get();
 
     return 0;
 }
