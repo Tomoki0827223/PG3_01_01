@@ -13,6 +13,7 @@ double recursiveWage(int hours) {
         total += wage;
     }
 
+
     return total;
 }
 
