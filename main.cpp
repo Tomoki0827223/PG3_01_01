@@ -23,7 +23,7 @@ double totalRecursiveWage(int hours) {
     }
 }
 
-// 一般的な賃金を計算する関数
+
 double standardWage(int hours, double hourlyRate = 1072) {
     return hours * hourlyRate;
 }
