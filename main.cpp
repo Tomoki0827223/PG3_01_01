@@ -27,6 +27,9 @@ void setTimeout(void (*p)(int*), int second, int* result) {
 }
 
 int main() {
+
+    SetConsoleOutputCP(65001);
+
     srand((unsigned)time(0));  // 乱数の種を初期化
     int userChoice;
     int diceResult = rollDice();  // ランダムなサイコロの出目
