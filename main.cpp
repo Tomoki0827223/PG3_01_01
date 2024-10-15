@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include <iostream>
 #include <thread>
 #include <cstdlib>
 #include <ctime>
+#include <functional>
 
 // SetTimeout関数
 void SetTimeout(int milliseconds) {
@@ -14,7 +14,7 @@ int main() {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     // ユーザーの入力を受け付けるラムダ式
-    auto getUserInput = []() -> bool {
+    std::function<bool()> getUserInput = [&]() {  // [&] でキャプチャ
         std::string userInput;
         std::cout << "奇数(半)か偶数(丁)かを予想してください (半=odd, 丁=even): ";
         std::cin >> userInput;
@@ -32,26 +32,39 @@ int main() {
         };
 
     // サイコロの出目をランダムに決定
-    int diceRoll = std::rand() % 6 + 1; // 1〜6の乱数
+    auto rollDice = []() -> int {
+        return std::rand() % 6 + 1; // 1〜6の乱数
+        };
+
+    // 出目が奇数か偶数かを判定するラムダ式
+    auto isOdd = [](int number) -> bool {
+        return number % 2 == 1; // 奇数ならtrue
+        };
+
+    // サイコロを振って結果を表示するラムダ式
+    auto displayResult = [](int diceRoll, bool userGuess, bool result) {
+        std::cout << "サイコロの出目は " << diceRoll << " でした。\n";
+        if (result == userGuess) {
+            std::cout << "おめでとうございます！予想が当たりました。\n";
+        }
+        else {
+            std::cout << "残念！予想が外れました。\n";
+        }
+        };
 
     // ユーザー入力のキャプチャ
     bool userGuess = getUserInput();
+
+    // サイコロの出目を決定
+    int diceRoll = rollDice();
 
     // もったいつけるために3秒待機
     std::cout << "結果を待っています...\n";
     SetTimeout(3000);
 
-    // 出目が奇数か偶数かを判定
-    bool isOdd = (diceRoll % 2 == 1);
-
-    // 結果の表示
-    std::cout << "サイコロの出目は " << diceRoll << " でした。\n";
-    if (isOdd == userGuess) {
-        std::cout << "おめでとうございます！予想が当たりました。\n";
-    }
-    else {
-        std::cout << "残念！予想が外れました。\n";
-    }
+    // 出目が奇数か偶数かを判定して結果を表示
+    bool result = isOdd(diceRoll);
+    displayResult(diceRoll, userGuess, result);
 
     return 0;
 }
