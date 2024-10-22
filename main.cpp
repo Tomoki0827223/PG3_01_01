@@ -3,6 +3,7 @@
 #include <time.h>
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -54,13 +55,11 @@ void showHand(const vector<Card>& hand, const char* name) {
     for (const auto& card : hand) {
         printf("[%s %d] ", card.suit.c_str(), card.value);
     }
-    printf("合計: %d\n", calculateTotal(hand));
+    printf("合計: %d\n\n", calculateTotal(hand));
 }
 
-int main() {
-    srand(static_cast<unsigned>(time(0)));  // 乱数の初期化
-
-    // プレイヤーとディーラーの手札
+// ゲームを実行する関数
+void playBlackjack() {
     vector<Card> playerHand;
     vector<Card> dealerHand;
 
@@ -75,8 +74,8 @@ int main() {
         showHand(playerHand, "プレイヤー");
 
         if (calculateTotal(playerHand) > 21) {
-            printf("バースト！プレイヤーの負けです。\n");
-            return 0;
+            printf("バースト！プレイヤーの負けです。\n\n");
+            return;
         }
 
         printf("カードを引きますか？（1: 引く, 0: やめる）: ");
@@ -112,6 +111,28 @@ int main() {
     else {
         printf("引き分けです！\n");
     }
+}
+
+int main() {
+    srand(static_cast<unsigned>(time(0)));  // 乱数の初期化
+
+    while (true) {
+        playBlackjack();  // ゲームを実行
+
+        // 再度プレイするか確認
+        printf("もう一度プレイしますか？（1: はい, 0: いいえ）: ");
+        int playAgain;
+        scanf_s("%d", &playAgain);
+
+        if (playAgain == 0) {
+            break;  // プレイヤーが終了を選んだらループを抜ける
+        }
+    }
+
+    // プログラムが終了しないように一時停止
+    printf("終了するにはEnterキーを押してください");
+    cin.ignore();
+    cin.get();
 
     return 0;
 }
