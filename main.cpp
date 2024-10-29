@@ -1,11 +1,13 @@
 #include <stdio.h>
-#include <Windows.h>
+#include "Enemy.h"
 
 int main() {
-	SetConsoleOutputCP(65001);
+    Enemy enemy;
 
-	char str[] = "ソ";
-	printf("%s", str);
 
-	return 0;
+    for (int i = 0; i < 6; ++i) {
+        enemy.Update();
+    }
+
+    return 0;
 }
